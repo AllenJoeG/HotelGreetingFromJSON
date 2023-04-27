@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "salutation": "Good Morning"
+  },
+  {
+    "id": 2,
+    "salutation": "Good Afternoon"
+  },
+  {
+    "id": 3,
+    "salutation": "Good Evening"
+  }
+]

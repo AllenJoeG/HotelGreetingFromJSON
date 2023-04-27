@@ -1,0 +1,6 @@
+[
+  {
+    "id": 1,
+    "template": "`${salutation} ${guest.name}, and welcome to ${company}! `"
+  }
+]
