@@ -24,13 +24,13 @@ app.use(express.static('./server/public'));
 // ----- /salutations routes ---------------
 app.use('/salutations', salutationsRouter);
 
-// ----- /company routes ---------------
+// ----- /companies routes ---------------
 app.use('/companies', companiesRouter);
 
 // ----- /guests routes ---------------
 app.use('/guests', guestsRouter);
 
-// ----- template routes ---------------
+// ----- templates routes ---------------
 app.use('/templates', templatesRouter);
 
 // Starts the server, and listens for requests:
