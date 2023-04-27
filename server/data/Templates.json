@@ -1,6 +1,6 @@
 [
   {
     "id": 1,
-    "template": "`${salutation} ${guest.name}, and welcome to ${company}! `"
+    "template": "SALUTATION, GUEST, and welcome to COMPANY!"
   }
 ]

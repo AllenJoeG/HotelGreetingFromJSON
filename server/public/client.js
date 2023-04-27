@@ -2,13 +2,17 @@ $(document).ready(onReady);
 
 // Initial Render functions
 function onReady() {
+  // --- Render Functions ---
   renderGuests();
   renderCompanies();
   renderTemplates();
   renderSalutations();
+
+  // --- Click Handlers ---
+  $('#generate-message').on('click', generateMessage);
 }
 
-
+// --- Declaring Render Functions ---
   function renderSalutations() {
     $.ajax({
       method: 'GET',
@@ -19,7 +23,7 @@ function onReady() {
       
       for (let item of response) {
         $salutations.append(`
-          <option value=${item.id}>${item.salutation}</option>
+          <option key=${item.id} value="${item.salutation}">${item.salutation}</option>
         `)
       }
     }).catch((error) => {
@@ -37,7 +41,7 @@ function onReady() {
       
       for (let item of response) {
         $guests.append(`
-          <option value=${item.id}>${item.firstName} ${item.lastName}</option>
+          <option key=${item.id} value="${item.firstName} ${item.lastName}">${item.firstName} ${item.lastName}</option>
         `)
       }
     }).catch((error) => {
@@ -54,7 +58,7 @@ function onReady() {
       $companies.empty();
       for (let item of response) {
         $companies.append(`
-          <option value=${item.id}>${item.company}</option>
+          <option key=${item.id} value="${item.company}">${item.company}</option>
         `)
       }
     }).catch((error) => {
@@ -71,14 +75,46 @@ function onReady() {
       $templates.empty();
       for (let item of response) {
         $templates.append(`
-          <option value=${item.id}>${item.template}</option>
+          <option key=${item.id} value="${item.template}">${item.template}</option>
         `)
       }
     }).catch((error) => {
       console.error(error);
     })
   }
+// --- End Render Functions ---
 
+// --- Click Handler Functions ---
+
+  function generateMessage() {
+    let selectedSalutation = $('#time-select').val();
+    let selectedCompany = $('#company-select').val();
+    let selectedGuest = $('#guest-select').val();
+    let selectedTemplate = $('#template-select').val();
+
+    $('#messages').append(`
+      <li> ${populateTemplate(selectedSalutation, selectedCompany, selectedGuest, selectedTemplate)} </li>
+    `)
+
+
+  }
+
+// --- End Click Handler Functions ---
+
+// --- Template Logic ---
+function populateTemplate(salut, comp, gst, templt){
+  // let salutation = salut;
+  // let company = comp;
+  // let guest = gst;
+  // let finalString = templt;
+  
+  let replaceSalutation = templt.replace("SALUTATION", salut);
+  console.log(replaceSalutation);
+  let replaceGuest = replaceSalutation.replace("GUEST", gst);
+  let finalString = replaceGuest.replace("COMPANY", comp);
+  console.log(finalString);
+  return finalString;
+}
 
 //Optional jquery approach, prefer the above AJAX
 // var url = 'localhost:5001/salutations';
