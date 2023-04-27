@@ -26,3 +26,8 @@ Clone down this repository into the editor of your choice. Assuming you have NPM
 - navigate browser to 'localhost:{PORT}'
 - use dropdowns to select Salutation, Guest, Company, and Template.
 - Click 'Generate' to append the selections to a list at the bottom 
+
+## Testing & Verification
+To keep the repository lightweight (and frankly, time constraints) I did not include any testing framework beyond a placeholder script in the package.json were I to integrate one. Validation of data moving was confirmed with various server and client console logs, though were snipped out when they were no longer needed. If you poke back a few commits you can probably find some.
+In place still, if you inspect the client in-browser, are two console logs demonstrating the object structure of the Guests and Companies data that are cached when the initial document onReady() fires. For further feature buildout (say accessing Guest or Company information beyond the name). 
+I fully recognize that this sort of public-exposure logging of internal data structures is a NOT best practice, and left it there as proof-of-cache and for this very conversation point.
