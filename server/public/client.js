@@ -8,8 +8,12 @@ function onReady() {
   renderTemplates();
   renderSalutations();
 
-  // --- Click Handlers ---
+  // --- Event Handlers ---
   $('#generate-message').on('click', generateMessage);
+
+  // --- JSON Cache variables ---
+  let cachedGuests;
+  let cachedCompanies;
 }
 
 // --- Declaring Render Functions ---
@@ -20,7 +24,10 @@ function onReady() {
     }).then((response) => {
       let $salutations = $('#time-select')
       $salutations.empty();
-      
+      $salutations.append(`
+        <option key=${0}> - Select Salutation - </option>
+      `)
+
       for (let item of response) {
         $salutations.append(`
           <option key=${item.id} value="${item.salutation}">${item.salutation}</option>
@@ -38,7 +45,14 @@ function onReady() {
     }).then((response) => {
       let $guests = $('#guest-select');
       $guests.empty();
-      
+      $guests.append(`
+        <option key=${0}> - Select Guest - </option>
+      `)
+
+      // Stash to cache
+      cachedGuests = response;
+      console.log(cachedGuests);
+
       for (let item of response) {
         $guests.append(`
           <option key=${item.id} value="${item.firstName} ${item.lastName}">${item.firstName} ${item.lastName}</option>
@@ -56,6 +70,14 @@ function onReady() {
     }).then((response) => {
       let $companies = $('#company-select')
       $companies.empty();
+      $companies.append(`
+        <option key=${0}> - Select Company - </option>
+      `)
+
+      // Stash to Cache
+      cachedCompanies = response;
+      console.log(cachedCompanies);
+
       for (let item of response) {
         $companies.append(`
           <option key=${item.id} value="${item.company}">${item.company}</option>
@@ -73,6 +95,10 @@ function onReady() {
     }).then((response) => {
       let $templates = $('#template-select')
       $templates.empty();
+      $templates.append(`
+        <option key=${0}> - Select Template - </option>
+      `)
+      
       for (let item of response) {
         $templates.append(`
           <option key=${item.id} value="${item.template}">${item.template}</option>
@@ -84,7 +110,7 @@ function onReady() {
   }
 // --- End Render Functions ---
 
-// --- Click Handler Functions ---
+// --- Event Handler Functions ---
 
   function generateMessage() {
     let selectedSalutation = $('#time-select').val();
@@ -95,24 +121,16 @@ function onReady() {
     $('#messages').append(`
       <li> ${populateTemplate(selectedSalutation, selectedCompany, selectedGuest, selectedTemplate)} </li>
     `)
-
-
   }
 
 // --- End Click Handler Functions ---
 
 // --- Template Logic ---
-function populateTemplate(salut, comp, gst, templt){
-  // let salutation = salut;
-  // let company = comp;
-  // let guest = gst;
-  // let finalString = templt;
+function populateTemplate(salutation, company, guest, templt){
   
-  let replaceSalutation = templt.replace("SALUTATION", salut);
-  console.log(replaceSalutation);
-  let replaceGuest = replaceSalutation.replace("GUEST", gst);
-  let finalString = replaceGuest.replace("COMPANY", comp);
-  console.log(finalString);
+  let replaceSalutation = templt.replace("SALUTATION", salutation);
+  let replaceGuest = replaceSalutation.replace("GUEST", guest);
+  let finalString = replaceGuest.replace("COMPANY", company);
   return finalString;
 }
 
